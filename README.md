@@ -1,2 +1,2 @@
 # Simple-chat-room
-This is a small project to implement a simple chat.
+基于netty框架实现简单聊天室功能
