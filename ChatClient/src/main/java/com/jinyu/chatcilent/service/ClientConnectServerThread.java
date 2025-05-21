@@ -1,6 +1,7 @@
 package com.jinyu.chatcilent.service;
 
 import com.jinyu.chatcommon.Message;
+import com.jinyu.chatcommon.MessageType;
 
 import javax.management.ObjectName;
 import java.io.IOException;
@@ -21,6 +22,17 @@ public class ClientConnectServerThread extends Thread{
         try {
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
             Message mes = (Message) ois.readObject();
+//            等待服务端传来message
+            if(mes.getMesType().equals(MessageType.MESSAGE_RET_ONLINE_USERS_LIST)){
+//                服务端的信息是返回在线用户列表，所以这里等待接收
+                String[] onlineUsers = mes.getContent().split(" ");
+                System.out.println("=========在线用户列表=========");
+                for(int i = 0;i < onlineUsers.length;i++){
+                    System.out.println("用户：" + onlineUsers[i]);
+                }
+            }else{
+                System.out.println("其他类型的信息，暂时不做处理");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class UserLogin {
+public class ToUserFunction {
 //    全局变量，便于操作
     private User user = new User();
     private Socket socket;
@@ -51,5 +51,17 @@ public class UserLogin {
         }
 
         return b;
+    }
+    public void reqOnlineUserList(){
+//        请求返回用户列表
+        Message message = new Message();
+        message.setMesType(MessageType.MESSAGE_REQ_ONLINE_USERS);
+
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(ClientConnServerThreadsManage.getClientConnectServerThread(user.getUserId()).getSocket().getOutputStream());
+            oos.writeObject(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

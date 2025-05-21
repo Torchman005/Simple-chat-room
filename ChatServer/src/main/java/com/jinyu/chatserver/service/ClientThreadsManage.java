@@ -13,4 +13,8 @@ public class ClientThreadsManage {
     public static ServerConnectClientThread getServerConnectClientThread(String userId){
         return threads.get(userId);
     }
+    public static String getOnlineUsers(){
+//        这里需要遍历数据库的user，先不作这里的业务处理
+        return "1";
+    }
 }
