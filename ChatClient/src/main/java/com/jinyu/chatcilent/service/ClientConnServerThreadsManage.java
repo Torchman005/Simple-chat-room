@@ -18,4 +18,7 @@ public class ClientConnServerThreadsManage {
     public static ClientConnectServerThread getClientConnectServerThread(String userId){
         return threads.get(userId);
     }
+    public static void removeCCSThread(String userId){
+        threads.remove(userId);
+    }
 }

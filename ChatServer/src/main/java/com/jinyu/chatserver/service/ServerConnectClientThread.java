@@ -6,6 +6,7 @@ import com.jinyu.chatcommon.MessageType;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerConnectClientThread extends Thread{
@@ -15,10 +16,13 @@ public class ServerConnectClientThread extends Thread{
         this.socket = socket;
         this.userId = userId;
     }
+    public Socket getSocket(){
+        return this.socket;
+    }
     @Override
     public void run(){
         while(true){
-            System.out.println("用户" + userId + "已连接，保持通信");
+            System.out.println(userId + "已连接并保持通信");
             try {
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 Message mes = (Message) ois.readObject();
@@ -33,6 +37,19 @@ public class ServerConnectClientThread extends Thread{
 
                     ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
                     oos.writeObject(mes2);
+                }else if(mes.getMesType().equals(MessageType.MESSAGE_CLIENT_EXIT)){
+//                    调用方法
+                    ClientThreadsManage.removeSCCThread(mes.getSender());
+                    socket.close();//这里的socket是对应这个线程的socket，一定要记住关闭socket
+                    System.out.println(userId + "退出登录");
+                    break;//一定要记住break！
+                }else if(mes.getMesType().equals(MessageType.MESSAGE_COMM_MES)){
+                    ServerConnectClientThread serverConnectClientThread = ClientThreadsManage.getServerConnectClientThread(mes.getGetter());
+                    ObjectOutputStream oos = new ObjectOutputStream(serverConnectClientThread.getSocket().getOutputStream());
+                    oos.writeObject(mes);//若要离线留言，可发送给数据库
+
+                } else{
+                    System.out.println("其他类型的信息，暂时不作处理");
                 }
             } catch (Exception e) {
                 e.printStackTrace();

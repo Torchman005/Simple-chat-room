@@ -35,6 +35,10 @@ public class ChatServer {
                  */
                 if(user.getUserId().equals("qianzaoaiyin") && user.getPwd().equals("mygo")){
                     message.setMesType(MessageType.MESSAGE_LOGIN_SUCCEED);
+//                    加入线程
+                    ServerConnectClientThread thread = new ServerConnectClientThread(socket, user.getUserId());
+                    thread.start();
+                    ClientThreadsManage.addServerConnectClientThread(user.getUserId(), thread);
 //                    然后把message传给客户端
                     oos.writeObject(message);
                 }else{

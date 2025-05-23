@@ -18,7 +18,8 @@ public class ClientConnectServerThread extends Thread{
     @Override
     public void run(){
 //        while循环来持续接收服务端传来的信息
-        System.out.println("等待读取");
+        System.out.println("(等待读取)");
+
         try {
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
             Message mes = (Message) ois.readObject();
@@ -30,7 +31,10 @@ public class ClientConnectServerThread extends Thread{
                 for(int i = 0;i < onlineUsers.length;i++){
                     System.out.println("用户：" + onlineUsers[i]);
                 }
-            }else{
+            }else if(mes.getMesType().equals(MessageType.MESSAGE_COMM_MES)){
+//                普通的聊天消息
+                System.out.println("\n" + mes.getSender() + ":" + mes.getContent());
+            } else{
                 System.out.println("其他类型的信息，暂时不做处理");
             }
 

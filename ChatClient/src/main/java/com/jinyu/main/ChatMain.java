@@ -1,6 +1,8 @@
 package com.jinyu.main;
 
+import com.jinyu.chatcilent.service.ClientMessageService;
 import com.jinyu.chatcilent.service.ToUserFunction;
+import com.jinyu.utils.Utility;
 
 import java.util.Scanner;
 
@@ -10,26 +12,36 @@ import java.util.Scanner;
 public class ChatMain {
 //    控制是否登录循环
     private boolean loop = true;
+    private boolean status = false;
+    private String userId;//设个全局变量，以便后面使用
     private ToUserFunction toUserFunction = new ToUserFunction();
     private int count = 0;//用来记录登录次数，若三次登录账号密码错误则自动退出程序
+    private ClientMessageService clientMessageService = new ClientMessageService();// 对象用户私聊/群聊
 
     public static void main(String[] args) throws InterruptedException {
         new ChatMain().login();
-        Thread.sleep(1000);
-        System.out.println("退出系统...");
+        System.out.println("(退出)");
     }
 
-    public void login(){
-        //    接收用户键盘输入
-        Scanner sc = new Scanner(System.in);
-        while (loop){
-
+    public void login() throws InterruptedException {
+        while (!status) {
             System.out.println("请输入用户名：");
-            String userId = sc.next();
+            userId = Utility.readString(20);
             System.out.println("请输入密码：");
-            String pwd = sc.next();
-            if(toUserFunction.checkUser(userId, pwd)) {
-                System.out.println("登陆成功，欢迎！");
+            String pwd = Utility.readString(20);
+            if (toUserFunction.checkUser(userId, pwd)) {
+                System.out.println("(登陆成功，欢迎!)");
+                status = true;
+            } else {
+                System.out.println("(登陆失败,请检查用户名或密码是否正确)");
+                count++;
+            }
+//            判断失败是否超过三次
+            if (count == 3) {
+                return;
+            }
+        }
+        while (loop){
 //                因ui还未做出，现先用用户输入数字来实现功能
                 /*
                 1:获取在线用户列表
@@ -38,36 +50,33 @@ public class ChatMain {
                 4:发送文件
                 9:退出
                  */
-                int key = sc.nextInt();
+                int key = Utility.readInt();
                 switch (key){
                     case 1:
                         toUserFunction.reqOnlineUserList();
                         break;
                     case 2:
-                        System.out.println("群发消息");
+                        System.out.println("(群发消息)");
                         break;
                     case 3:
-                        System.out.println("私聊消息");
+                        System.out.println("选择你要发送的用户：");
+                        String getterId = Utility.readString(10);
+                        System.out.println("请输入发送的信息：");
+                        String content = Utility.readString(50);
+                        clientMessageService.sendMessageToOne(content, userId, getterId);
                         break;
                     case 4:
-                        System.out.println("发送文件");
+                        System.out.println("(发送文件)");
                         break;
                     case 9:
-                        System.out.println("退出");
+                        toUserFunction.logout();
+                        System.out.println("(系统已安全退出！)");
+//                        需要管理这个客户端的线程退出
+                        break;
+                    default:
+                        System.out.println("新功能仍在开发中，敬请期待！[]~(￣▽￣)~*");
                         break;
                 }
-
-                System.out.println("新功能仍在开发中，敬请期待！[]~(￣▽￣)~*");
-                break;
-            }else{
-                System.out.println("登陆失败,请检查用户名或密码是否正确.");
-                count++;
-            }
-//            判断失败是否超过三次
-            if(count==3){
-                break;
-            }
         }
     }
-
 }

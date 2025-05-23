@@ -17,4 +17,7 @@ public class ClientThreadsManage {
 //        这里需要遍历数据库的user，先不作这里的业务处理
         return "1";
     }
+    public static void removeSCCThread(String userId){
+        threads.remove(userId);
+    }
 }

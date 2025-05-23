@@ -4,6 +4,7 @@ import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;
 import com.jinyu.chatcommon.User;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
@@ -43,7 +44,7 @@ public class ToUserFunction {
                 ClientConnServerThreadsManage.addClientConnectServerThread(userId, thread);
 
             }else{
-                System.out.println("用户名或密码不正确...");
+                System.out.println("(用户名或密码不正确)");
                 socket.close();
             }
         } catch (Exception e) {
@@ -53,9 +54,10 @@ public class ToUserFunction {
         return b;
     }
     public void reqOnlineUserList(){
-//        请求返回用户列表
+//        请求返回在线用户列表
         Message message = new Message();
         message.setMesType(MessageType.MESSAGE_REQ_ONLINE_USERS);
+        message.setSender(user.getUserId());
 
         try {
             ObjectOutputStream oos = new ObjectOutputStream(ClientConnServerThreadsManage.getClientConnectServerThread(user.getUserId()).getSocket().getOutputStream());
@@ -64,4 +66,23 @@ public class ToUserFunction {
             e.printStackTrace();
         }
     }
+
+//    退出客户端并给服务端发送退出message的方法
+    public void logout(){
+        Message mes = new Message();
+        mes.setMesType(MessageType.MESSAGE_CLIENT_EXIT);
+//        指定发送者
+        mes.setSender(user.getUserId());
+
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(ClientConnServerThreadsManage.getClientConnectServerThread(user.getUserId()).getSocket().getOutputStream());
+            oos.writeObject(mes);
+            System.out.println("(" + user.getUserId() + "退出)");
+            System.exit(0);//结束进程
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
