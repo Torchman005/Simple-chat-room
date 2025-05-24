@@ -56,17 +56,25 @@ public class ChatMain {
                         toUserFunction.reqOnlineUserList();
                         break;
                     case 2:
-                        System.out.println("(群发消息)");
+                        System.out.println("(群聊)");
                         break;
                     case 3:
                         System.out.println("选择你要发送的用户：");
                         String getterId = Utility.readString(10);
-                        System.out.println("请输入发送的信息：");
+                        while(true) {
+                        System.out.println("(输入exit退出)请输入发送的信息：");
                         String content = Utility.readString(50);
+                        if(content.equals("exit")){
+                            break;
+                        }
                         clientMessageService.sendMessageToOne(content, userId, getterId);
+                    }
                         break;
                     case 4:
                         System.out.println("(发送文件)");
+                        break;
+                    case 5:
+                        System.out.println("拉群");
                         break;
                     case 9:
                         toUserFunction.logout();

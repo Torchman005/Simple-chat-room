@@ -40,12 +40,13 @@ public class ServerConnectClientThread extends Thread{
                 }else if(mes.getMesType().equals(MessageType.MESSAGE_CLIENT_EXIT)){
 //                    调用方法
                     ClientThreadsManage.removeSCCThread(mes.getSender());
-                    socket.close();//这里的socket是对应这个线程的socket，一定要记住关闭socket
+                    //socket.close();//这里的socket是对应这个线程的socket，一定要记住关闭socket
                     System.out.println(userId + "退出登录");
                     break;//一定要记住break！
                 }else if(mes.getMesType().equals(MessageType.MESSAGE_COMM_MES)){
+//                    私聊转发
                     ServerConnectClientThread serverConnectClientThread = ClientThreadsManage.getServerConnectClientThread(mes.getGetter());
-                    ObjectOutputStream oos = new ObjectOutputStream(serverConnectClientThread.getSocket().getOutputStream());
+                    ObjectOutputStream oos = new ObjectOutputStream(this.socket.getOutputStream());
                     oos.writeObject(mes);//若要离线留言，可发送给数据库
 
                 } else{
