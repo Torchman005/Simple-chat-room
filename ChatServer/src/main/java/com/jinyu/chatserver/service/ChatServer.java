@@ -1,5 +1,6 @@
 package com.jinyu.chatserver.service;
 
+import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;
 import com.jinyu.chatcommon.User;
 
