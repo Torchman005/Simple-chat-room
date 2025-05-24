@@ -2,8 +2,10 @@ package com.jinyu.chatcilent.service;
 
 import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;
+import com.jinyu.utils.Utility;
 
 import javax.management.ObjectName;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
@@ -36,6 +38,15 @@ public class ClientConnectServerThread extends Thread{
                 } else if (mes.getMesType().equals(MessageType.MESSAGE_COMM_MES)) {
 //                普通的聊天消息
                     System.out.println("\n" + mes.getSendTime() + "  " + mes.getSender() + ": " + mes.getContent());
+                } else if(mes.getMesType().equals(MessageType.MESSAGE_FILE_MES)){
+                    System.out.println("来自" + mes.getSender() + "的文件，请输入要保存的路径：" );
+                    mes.setDest(Utility.readString(50));
+                    System.out.println("正在保存...");
+
+                    FileOutputStream fos = new FileOutputStream(mes.getDest());
+                    fos.write(mes.getFileBytes());
+                    fos.close();
+                    System.out.println("保存成功！");
                 } else {
                     System.out.println("其他类型的信息，暂时不做处理");
                 }

@@ -3,10 +3,8 @@ package com.jinyu.chatserver.service;
 import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerConnectClientThread extends Thread{
@@ -49,6 +47,11 @@ public class ServerConnectClientThread extends Thread{
                     ObjectOutputStream oos = new ObjectOutputStream(this.socket.getOutputStream());
                     oos.writeObject(mes);//若要离线留言，可发送给数据库
 
+                } else if(mes.getMesType().equals(MessageType.MESSAGE_FILE_MES)){
+//                    文件转发
+                    ServerConnectClientThread thread = ClientThreadsManage.getServerConnectClientThread(mes.getGetter());
+                    ObjectOutputStream oos = new ObjectOutputStream(thread.getSocket().getOutputStream());
+                    oos.writeObject(mes);
                 } else{
                     System.out.println("其他类型的信息，暂时不作处理");
                 }

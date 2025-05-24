@@ -1,9 +1,11 @@
 package com.jinyu.main;
 
 import com.jinyu.chatcilent.service.ClientMessageService;
+import com.jinyu.chatcilent.service.FileClientService;
 import com.jinyu.chatcilent.service.ToUserFunction;
 import com.jinyu.utils.Utility;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /*
@@ -17,6 +19,7 @@ public class ChatMain {
     private ToUserFunction toUserFunction = new ToUserFunction();
     private int count = 0;//用来记录登录次数，若三次登录账号密码错误则自动退出程序
     private ClientMessageService clientMessageService = new ClientMessageService();// 对象用户私聊/群聊
+    private FileClientService fileClientService = new FileClientService();//文件传输对象
 
     public static void main(String[] args) throws InterruptedException {
         new ChatMain().login();
@@ -71,7 +74,15 @@ public class ChatMain {
                     }
                         break;
                     case 4:
-                        System.out.println("(发送文件)");
+                        System.out.println("请输入你要发送的文件路径(C:/xx 或 C:\\xx)：");
+                        String src = Utility.readString(50);
+                        System.out.println("你要发给谁(在线)：");
+                        String getter = Utility.readString(20);
+                        try {
+                            fileClientService.sendFileToOne(src, userId, getter);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         break;
                     case 5:
                         System.out.println("拉群");

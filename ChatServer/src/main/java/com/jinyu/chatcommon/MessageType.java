@@ -7,4 +7,6 @@ public interface MessageType {
     String MESSAGE_REQ_ONLINE_USERS = "4";//请求返回在线用户列表
     String MESSAGE_RET_ONLINE_USERS_LIST = "5";//返回在线用户列表
     String MESSAGE_CLIENT_EXIT = "6";//用户退出
+    String MESSAGE_TO_ALL_MES = "7";
+    String MESSAGE_FILE_MES = "8";
 }
