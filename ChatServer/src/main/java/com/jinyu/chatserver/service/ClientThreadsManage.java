@@ -1,9 +1,14 @@
 package com.jinyu.chatserver.service;
 
 import java.util.HashMap;
+import java.util.Queue;
 
 public class ClientThreadsManage {
     private static HashMap<String, ServerConnectClientThread> threads = new HashMap<>();
+
+    public static HashMap<String, ServerConnectClientThread> getThreads() {
+        return threads;
+    }
 
     public static void addServerConnectClientThread(String userId, ServerConnectClientThread serverConnectClientThread){
 
@@ -13,9 +18,8 @@ public class ClientThreadsManage {
     public static ServerConnectClientThread getServerConnectClientThread(String userId){
         return threads.get(userId);
     }
-    public static String getOnlineUsers(){
-//        这里需要遍历数据库的user，先不作这里的业务处理
-        return "1";
+    public static Queue<String> getOnlineUsers(){
+        return OnlineUsers.onlineUsers;
     }
     public static void removeSCCThread(String userId){
         threads.remove(userId);

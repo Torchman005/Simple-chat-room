@@ -1,6 +1,7 @@
 package com.jinyu.chatcommon;
 
 import java.io.Serializable;
+import java.util.Queue;
 
 public class Message implements Serializable {
 //    指定序列化版本号
@@ -8,6 +9,16 @@ public class Message implements Serializable {
     private String sender;
     private String getter;
     private String content;//发送内容
+    private Queue<String> onlineUsers;//在线用户队列
+
+    public Queue<String> getOnlineUsers() {
+        return onlineUsers;
+    }
+
+    public void setOnlineUsers(Queue<String> onlineUsers) {
+        this.onlineUsers = onlineUsers;
+    }
+
     private String sendTime;
     private String mesType;//消息类型（接口定义）
 
@@ -16,6 +27,43 @@ public class Message implements Serializable {
     private int fileLen = 0;
     private String dest;//文件传输到哪里
     private String src;//文件源路径
+    private Queue<String> groupMembers;
+    private boolean isUser;//判断用户是否存在
+    private boolean isGroup;//判断群聊是否存在
+
+    public boolean isUser() {
+        return isUser;
+    }
+
+    public void setUser(boolean user) {
+        isUser = user;
+    }
+
+    public boolean isGroup() {
+        return isGroup;
+    }
+
+    public void setGroup(boolean group) {
+        isGroup = group;
+    }
+
+    public Queue<String> getGroupMembers() {
+        return groupMembers;
+    }
+
+    public void setGroupMembers(Queue<String> groupMembers) {
+        this.groupMembers = groupMembers;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    private String groupName;
 
     public byte[] getFileBytes() {
         return fileBytes;

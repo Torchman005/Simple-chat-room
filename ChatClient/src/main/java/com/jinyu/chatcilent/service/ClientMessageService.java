@@ -28,13 +28,14 @@ public class ClientMessageService {
         }
     }
 
-    public void senMessageToAll(String content, String senderId){
+    public void senMessageToGroup(String content, String senderId, String groupName){
         Message mes = new Message();
         mes.setContent(content);
-        mes.setMesType(MessageType.MESSAGE_TO_ALL_MES);
+        mes.setMesType(MessageType.MESSAGE_TO_GROUP_MES);
         mes.setSender(senderId);
+        mes.setGroupName(groupName);
         mes.setSendTime(new Date().toString());
-        System.out.println("\n" + mes.getSendTime() + "  " + mes.getSender() + ": " + mes.getContent());
+        System.out.println("\n" + mes.getGroupName() + "  " + mes.getSendTime() + "  " + mes.getSender() + ": " + mes.getContent());
 
         try {
             ObjectOutputStream oos = new ObjectOutputStream(ClientConnServerThreadsManage.getClientConnectServerThread(senderId).getSocket().getOutputStream());
