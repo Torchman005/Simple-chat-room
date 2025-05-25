@@ -12,9 +12,13 @@ import java.net.Socket;
 public class ChatServer {
     ServerSocket ss = null;
     public ChatServer() throws Exception{
-        System.out.println("服务端在6789端口监听");
+
         try {
+            System.out.println("服务端在6789端口监听");
+            //             启动推送新闻的线程
+            new Thread(new SendNewsToAllService()).start();
             ss = new ServerSocket(6789);
+
             while(true){
                 Socket socket = ss.accept();// 监听客户端的连接，若没有则阻塞
 
@@ -35,6 +39,10 @@ public class ChatServer {
                     ServerConnectClientThread thread = new ServerConnectClientThread(socket, user.getUserId());
                     thread.start();
                     ClientThreadsManage.addServerConnectClientThread(user.getUserId(), thread);
+
+//                    将用户Id加入在线用户队列
+                    OnlineUsers.addOnlineUsers(user.getUserId());
+
 //                    然后把message传给客户端
                     oos.writeObject(message);
                 }else{
