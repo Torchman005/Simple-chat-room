@@ -4,11 +4,13 @@ import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;
 import com.jinyu.chatcommon.User;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Properties;
 
 public class ToUserFunction {
 //    全局变量，便于操作
@@ -22,7 +24,13 @@ public class ToUserFunction {
         boolean b = false;
         try {
 //        创建socket对象
-            socket = new Socket(InetAddress.getByName("127.0.0.1"), 6789);
+            Properties serverProp = new Properties();
+            FileInputStream input = new FileInputStream("serverconfig.properties");
+            serverProp.load(input);
+            String ip = serverProp.getProperty("ip");
+            String sport = serverProp.getProperty("port");
+            int port = Integer.parseInt(sport);
+            socket = new Socket(InetAddress.getByName(ip), port);
 
 //            向服务端传输用户信息，传的是对象
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
