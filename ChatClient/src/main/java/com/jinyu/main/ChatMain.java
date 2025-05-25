@@ -2,6 +2,7 @@ package com.jinyu.main;
 
 import com.jinyu.chatcilent.service.ClientMessageService;
 import com.jinyu.chatcilent.service.FileClientService;
+import com.jinyu.chatcilent.service.Group;
 import com.jinyu.chatcilent.service.ToUserFunction;
 import com.jinyu.utils.Utility;
 
@@ -20,6 +21,7 @@ public class ChatMain {
     private int count = 0;//用来记录登录次数，若三次登录账号密码错误则自动退出程序
     private ClientMessageService clientMessageService = new ClientMessageService();// 对象用户私聊/群聊
     private FileClientService fileClientService = new FileClientService();//文件传输对象
+    private Group group = new Group();
 
     public static void main(String[] args) throws InterruptedException {
         new ChatMain().login();
@@ -56,15 +58,29 @@ public class ChatMain {
                 int key = Utility.readInt();
                 switch (key){
                     case 1:
+//                        获取在线用户列表
                         toUserFunction.reqOnlineUserList();
                         break;
                     case 2:
-                        System.out.println("(群聊)");
+//                        群聊
+                        System.out.println("选择你要发送的群组：");
+                        String groupName = Utility.readString(20);
+                        while(true){
+                            Thread.sleep(1000);
+                            System.out.println("(输入exit退出)请输入发送的信息：");
+                            String content1 = Utility.readString(50);
+                            if(content1.equals("exit")){
+                                break;
+                            }
+                            clientMessageService.senMessageToGroup(content1, userId, groupName);
+                        }
                         break;
                     case 3:
+//                        私聊
                         System.out.println("选择你要发送的用户：");
                         String getterId = Utility.readString(10);
                         while(true) {
+                            Thread.sleep(1000);
                         System.out.println("(输入exit退出)请输入发送的信息：");
                         String content = Utility.readString(50);
                         if(content.equals("exit")){
@@ -74,6 +90,7 @@ public class ChatMain {
                     }
                         break;
                     case 4:
+//                        发送文件
                         System.out.println("请输入你要发送的文件路径(C:/xx 或 C:\\xx)：");
                         String src = Utility.readString(50);
                         System.out.println("你要发给谁(在线)：");
@@ -85,9 +102,11 @@ public class ChatMain {
                         }
                         break;
                     case 5:
-                        System.out.println("拉群");
+//                         拉群
+                        group.pullGroup(userId);
                         break;
                     case 9:
+//                        无异常退出
                         toUserFunction.logout();
                         System.out.println("(系统已安全退出！)");
 //                        需要管理这个客户端的线程退出
