@@ -1,4 +1,4 @@
-# Simple-chat-room
+# Simple-Chat-Room
 
 ### 基于socket通信技术（网络编程）实现的简单聊天室
 
