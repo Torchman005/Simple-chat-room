@@ -4,12 +4,19 @@
 
 功能：本项目仿照QQ，简单实现了QQ的一些基本功能如私聊，群聊，文件发送等，旨在实现**轻量级**的聊天程序 😋
 
+
+![show](https://github.com/Torchman005/Simple-chat-room/blob/main/show.gif)
+
+
 ![Static Badge](https://img.shields.io/badge/Language-Java-orange?style=plastic)
 ![Static Badge](https://img.shields.io/badge/Language-SQL-blue?style=plastic)
 
 ![Static Badge](https://img.shields.io/badge/Language-HTML-purple?style=plastic)
 ![Static Badge](https://img.shields.io/badge/Language-CSS-green?style=plastic)
 ![Static Badge](https://img.shields.io/badge/Language-JavaScript-yellow?style=plastic)
+
+
+
 
 技术栈：Linux，JavaSE，mysql，html+css+js
 
