@@ -18,8 +18,9 @@
 ![Static Badge](https://img.shields.io/badge/Language-JavaScript-yellow?style=plastic)
 
 
-## 使用前请手动填写位于client端的.properties配置文件指定服务器公网ip及端口号
+## 使用前请手动填写位于client端的.properties配置文件指定服务器公网ip
 
+## 端口号默认为2323
 
 
 技术栈：Linux，JavaSE，mysql，html+css+js
