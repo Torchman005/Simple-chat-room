@@ -24,11 +24,12 @@ public class ToUserFunction {
         boolean b = false;
         try {
 //        创建socket对象
-            Properties serverProp = new Properties();
-            FileInputStream input = new FileInputStream("serverconfig.properties");
-            serverProp.load(input);
-            String ip = serverProp.getProperty("ip");
-            String sport = serverProp.getProperty("port");
+//            读取配置文件
+            Properties prop = new Properties();
+            FileInputStream input = new FileInputStream("config.properties");
+            prop.load(input);
+            String ip = prop.getProperty("ip");
+            String sport = prop.getProperty("port");
             int port = Integer.parseInt(sport);
             socket = new Socket(InetAddress.getByName(ip), port);
 

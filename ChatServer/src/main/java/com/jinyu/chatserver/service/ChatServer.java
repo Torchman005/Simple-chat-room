@@ -4,20 +4,30 @@ import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;
 import com.jinyu.chatcommon.User;
 
+import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.PortUnreachableException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Properties;
 
 public class ChatServer {
     ServerSocket ss = null;
     public ChatServer() throws Exception{
 
         try {
-            System.out.println("服务端在6789端口监听");
+
             //             启动推送新闻的线程
             new Thread(new SendNewsToAllService()).start();
-            ss = new ServerSocket(6789);
+//            读取配置文件
+            Properties prop = new Properties();
+            FileInputStream input = new FileInputStream("config.properties");
+            prop.load(input);
+            String sport = prop.getProperty("port");
+            int port = Integer.parseInt(sport);
+            System.out.println("服务端在" + port + "端口监听");
+            ss = new ServerSocket(port);
 
             while(true){
                 Socket socket = ss.accept();// 监听客户端的连接，若没有则阻塞
