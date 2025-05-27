@@ -1,13 +1,11 @@
 package com.jinyu.chatcilent.service;
 
+import com.jinyu.cfg.GetPath;
 import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;
 import com.jinyu.chatcommon.User;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Properties;
@@ -25,13 +23,17 @@ public class ToUserFunction {
         try {
 //        创建socket对象
 //            读取配置文件
+//            ClassLoader classLoader = ToUserFunction.class.getClassLoader();
+//            InputStream input = classLoader.getResourceAsStream("main\\resources\\config.properties");
+            String path = GetPath.getPath();
+            FileInputStream input = new FileInputStream(path);
             Properties prop = new Properties();
-            FileInputStream input = new FileInputStream("config.properties");
             prop.load(input);
             String ip = prop.getProperty("ip");
             String sport = prop.getProperty("port");
             int port = Integer.parseInt(sport);
             socket = new Socket(InetAddress.getByName(ip), port);
+//            socket = new Socket(InetAddress.getByName("127.0.0.1"), 2323);
 
 //            向服务端传输用户信息，传的是对象
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());

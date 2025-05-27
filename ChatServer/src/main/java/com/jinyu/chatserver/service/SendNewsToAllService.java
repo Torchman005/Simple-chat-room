@@ -9,7 +9,6 @@ import java.util.*;
 // 服务端推送消息到全体在线用户
 
 public class SendNewsToAllService implements Runnable{
-    private Scanner sc = new Scanner(System.in);
     @Override
     public void run(){
 //        多次推送

@@ -1,10 +1,12 @@
 package com.jinyu.chatserver.service;
 
+import com.jinyu.cfg.GetPath;
 import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;
 import com.jinyu.chatcommon.User;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.PortUnreachableException;
@@ -18,15 +20,24 @@ public class ChatServer {
 
         try {
 
+
+
             //             启动推送新闻的线程
             new Thread(new SendNewsToAllService()).start();
-//            读取配置文件
+//
+
+            String path = GetPath.getPath();
+            FileInputStream input = new FileInputStream(path);
+//            ClassLoader classLoader = ChatServer.class.getClassLoader();
+//            InputStream input = classLoader.getResourceAsStream(path);
             Properties prop = new Properties();
-            FileInputStream input = new FileInputStream("config.properties");
             prop.load(input);
             String sport = prop.getProperty("port");
             int port = Integer.parseInt(sport);
+
+
             System.out.println("服务端在" + port + "端口监听");
+//            System.out.println("服务端在2323端口监听");
             ss = new ServerSocket(port);
 
             while(true){
