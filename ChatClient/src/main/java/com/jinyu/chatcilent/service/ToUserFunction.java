@@ -25,7 +25,7 @@ public class ToUserFunction {
 //            读取配置文件
 //            ClassLoader classLoader = ToUserFunction.class.getClassLoader();
 //            InputStream input = classLoader.getResourceAsStream("main\\resources\\config.properties");
-            String path = GetPath.getPath();
+            /*String path = GetPath.getPath();
             FileInputStream input = new FileInputStream(path);
             Properties prop = new Properties();
             prop.load(input);
@@ -33,7 +33,8 @@ public class ToUserFunction {
             String sport = prop.getProperty("port");
             int port = Integer.parseInt(sport);
             socket = new Socket(InetAddress.getByName(ip), port);
-//            socket = new Socket(InetAddress.getByName("127.0.0.1"), 2323);
+            */
+            socket = new Socket(InetAddress.getByName("127.0.0.1"), 2323);
 
 //            向服务端传输用户信息，传的是对象
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());

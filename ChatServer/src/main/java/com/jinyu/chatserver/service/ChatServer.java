@@ -25,20 +25,20 @@ public class ChatServer {
             //             启动推送新闻的线程
             new Thread(new SendNewsToAllService()).start();
 //
-
-            String path = GetPath.getPath();
-            FileInputStream input = new FileInputStream(path);
 //            ClassLoader classLoader = ChatServer.class.getClassLoader();
 //            InputStream input = classLoader.getResourceAsStream(path);
-            Properties prop = new Properties();
-            prop.load(input);
-            String sport = prop.getProperty("port");
-            int port = Integer.parseInt(sport);
+//            String path = GetPath.getPath();
+//            FileInputStream input = new FileInputStream(path);
+//            Properties prop = new Properties();
+//            prop.load(input);
+//            String sport = prop.getProperty("port");
+//            int port = Integer.parseInt(sport);
 
 
-            System.out.println("服务端在" + port + "端口监听");
-//            System.out.println("服务端在2323端口监听");
-            ss = new ServerSocket(port);
+//            System.out.println("服务端在" + port + "端口监听");
+            System.out.println("服务端在2323端口监听");
+//            ss = new ServerSocket(port);
+            ss = new ServerSocket(2323);
 
             while(true){
                 Socket socket = ss.accept();// 监听客户端的连接，若没有则阻塞
@@ -54,7 +54,7 @@ public class ChatServer {
                  * 注：这部分业务逻辑需要负责登录逻辑的人完善，本人只是写了个样例,我这里
                  * 先假设用户名是千早爱音，密码是mygo
                  */
-                if(user.getUserId().equals("qianzaoaiyin") && user.getPwd().equals("mygo")){
+                if((user.getUserId().equals("千早爱音") && user.getPwd().equals("mygo")) || (user.getUserId().equals("长崎素世") && user.getPwd().equals("mygo"))){
                     message.setMesType(MessageType.MESSAGE_LOGIN_SUCCEED);
 //                    加入线程
                     ServerConnectClientThread thread = new ServerConnectClientThread(socket, user.getUserId());

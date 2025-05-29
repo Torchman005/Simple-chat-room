@@ -1,0 +1,12 @@
+com\jinyu\utils\Utility.class
+com\jinyu\chatserver\service\OnlineUsers.class
+com\jinyu\chatserver\service\ChatServer.class
+com\jinyu\chatcommon\MessageType.class
+com\jinyu\chatcommon\User.class
+com\jinyu\chatframe\ChatFrame.class
+com\jinyu\chatserver\service\Groups.class
+com\jinyu\chatserver\service\ServerConnectClientThread.class
+com\jinyu\chatcommon\Message.class
+com\jinyu\cfg\GetPath.class
+com\jinyu\chatserver\service\ClientThreadsManage.class
+com\jinyu\chatserver\service\SendNewsToAllService.class

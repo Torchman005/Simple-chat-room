@@ -4,6 +4,7 @@ import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -48,9 +49,14 @@ public class ServerConnectClientThread extends Thread{
                     break;//一定要记住break！
                 }else if(mes.getMesType().equals(MessageType.MESSAGE_COMM_MES)){
 //                    私聊转发
-                    ServerConnectClientThread serverConnectClientThread = ClientThreadsManage.getServerConnectClientThread(mes.getGetter());
-                    ObjectOutputStream oos = new ObjectOutputStream(this.socket.getOutputStream());
-                    oos.writeObject(mes);//若要离线留言，可发送给数据库
+                    ObjectOutputStream oos = null;
+                    try {
+                        oos = new ObjectOutputStream(ClientThreadsManage.getServerConnectClientThread(mes.getGetter()).getSocket().getOutputStream());
+                        oos.writeObject(mes);//若要离线留言，可发送给数据库
+                    } catch (Exception e) {
+                        System.out.println( mes.getGetter() + "不在线，无法私聊");
+                    }
+
 
                 } else if(mes.getMesType().equals(MessageType.MESSAGE_FILE_MES)){
 //                    文件转发

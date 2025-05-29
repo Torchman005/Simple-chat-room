@@ -72,7 +72,7 @@ public class ChatMain {
                             if(content1.equals("exit")){
                                 break;
                             }
-                            clientMessageService.senMessageToGroup(content1, userId, groupName);
+                            clientMessageService.sendMessageToGroup(content1, userId, groupName);
                         }
                         break;
                     case 3:

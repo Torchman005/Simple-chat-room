@@ -28,7 +28,7 @@ public class ClientMessageService {
         }
     }
 
-    public void senMessageToGroup(String content, String senderId, String groupName){
+    public void sendMessageToGroup(String content, String senderId, String groupName){
         Message mes = new Message();
         mes.setContent(content);
         mes.setMesType(MessageType.MESSAGE_TO_GROUP_MES);
