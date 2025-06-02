@@ -30,11 +30,11 @@ Linux，JavaSE，mysql，html+css+js
 
 ## 🔧构建工具：
 
-idea，vscode，navicat
+idea,vscode,navicat
 
 ## ✏外部依赖；
 
-JUnit（maven管理）
+JUnit,JDBC,JavaFX（maven管理）
 
 ## 📌运行环境：
 
