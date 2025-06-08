@@ -1,6 +1,8 @@
-# Simple-Chat-Room
+<h1 align="center">Simple-Chat-Room</h1>
 
-### 基于socket通信技术（网络编程）实现的简单聊天室
+<p align="center">基于socket通信技术（网络编程）实现的简单聊天室</p>
+
+<div align="center">
 
 ## ✨功能：
 
