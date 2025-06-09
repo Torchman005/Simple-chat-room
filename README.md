@@ -1,6 +1,6 @@
 <h1 align="center">Simple-Chat-Room</h1>
 
-<p align="center">基于socket通信技术（网络编程）实现的简单聊天室</p>
+<p align="center">基于socket通信技术（网络编程）实现的简单在线聊天室</p>
 
 <div align="center">
 
