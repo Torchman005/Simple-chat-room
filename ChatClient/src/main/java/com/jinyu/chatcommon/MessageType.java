@@ -12,4 +12,7 @@ public interface MessageType {
     String MESSAGE_PULL_GROUP_MES = "9";//拉群
     String MESSAGE_SEND_TO_ALL = "10";//服务端推送新闻
     String MESSAGE_SYSTEM = "11";//系统消息
+    String MESSAGE_REGISTER = "12";//注册
+    String MESSAGE_REGISTER_SUCCEED = "12";
+    String MESSAGE_REGISTER_FAIL = "13";
 }

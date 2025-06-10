@@ -7,6 +7,15 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     private String userId;
     private String pwd;
+    private String userType;
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
 
     public User(String userId, String pwd) {
         this.userId = userId;

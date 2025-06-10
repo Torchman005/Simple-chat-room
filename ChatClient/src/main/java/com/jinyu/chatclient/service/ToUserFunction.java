@@ -10,6 +10,7 @@ import java.util.Properties;
 import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;
 import com.jinyu.chatcommon.User;
+import com.jinyu.chatcommon.UserType;
 import com.jinyu.ui.ChatUI;
 
 public class ToUserFunction {
@@ -38,6 +39,7 @@ public class ToUserFunction {
 //        给登录的用户账号和密码初始化，便于后续验证
         user.setUserId(userId);
         user.setPwd(pwd);
+        user.setUserType(UserType.USER_LOGIN);
 
         boolean b = false;
         try {
@@ -113,7 +115,7 @@ public class ToUserFunction {
         }
     }
 
-    public boolean registerUser(User user) {
+    public boolean registerUser(String userId, String pwd) {
         boolean b = false;
         try {
             // 读取配置文件
@@ -129,6 +131,9 @@ public class ToUserFunction {
             socket = new Socket(InetAddress.getByName(host), port);
 
             // 向服务端传输用户信息
+            user.setUserId(userId);
+            user.setPwd(pwd);
+            user.setUserType(UserType.USER_REGISTER);
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             oos.writeObject(user);
 
@@ -137,9 +142,10 @@ public class ToUserFunction {
             Message mes = (Message)ois.readObject();
 
             // 判断注册是否成功
-            if(mes.getMesType().equals(MessageType.MESSAGE_LOGIN_SUCCEED)) {
+            if(mes.getMesType().equals(MessageType.MESSAGE_REGISTER_SUCCEED)) {
                 b = true;
             } else {
+                displayMessage(new Message(MessageType.MESSAGE_SYSTEM, "注册失败(用户名已存在)"));
                 socket.close();
             }
         } catch (Exception e) {

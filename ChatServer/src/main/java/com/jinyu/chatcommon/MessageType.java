@@ -11,4 +11,7 @@ public interface MessageType {
     String MESSAGE_FILE_MES = "8";
     String MESSAGE_PULL_GROUP_MES = "9";
     String MESSAGE_SEND_TO_ALL = "10";
+    String MESSAGE_SYSTEM = "11";
+    String MESSAGE_REGISTER_SUCCEED = "12";
+    String MESSAGE_REGISTER_FAIL = "13";
 }
