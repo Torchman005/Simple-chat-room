@@ -1,4 +1,4 @@
-package com.jinyu.chatcilent.service;
+package com.jinyu.chatclient.service;
 
 import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;

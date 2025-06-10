@@ -1,0 +1,84 @@
+/* 滚动条样式 */
+.scroll-bar {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-background-radius: 10;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* 列表视图样式 */
+.list-view {
+    -fx-background-color: transparent;
+}
+
+.list-view .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-padding: 8 15;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-radius: 5;
+}
+
+/* 下拉框样式 */
+.combo-box {
+    -fx-background-color: transparent;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: white;
+}
+
+.combo-box .arrow {
+    -fx-background-color: white;
+}
+
+/* 文本区域样式 */
+.text-area {
+    -fx-background-color: transparent;
+}
+
+.text-area .content {
+    -fx-background-color: transparent;
+}
+
+/* 文本字段样式 */
+.text-field {
+    -fx-background-color: transparent;
+}
+
+.text-field .prompt-text {
+    -fx-fill: rgba(255, 255, 255, 0.5);
+}
+
+/* 对话框样式 */
+.dialog-pane {
+    -fx-background-color: #1a237e;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #283593;
+}
+
+.dialog-pane .content {
+    -fx-text-fill: white;
+}
+
+.dialog-pane .button-bar .button {
+    -fx-background-color: linear-gradient(to right, #3949ab, #5c6bc0);
+    -fx-text-fill: white;
+    -fx-background-radius: 20;
+    -fx-padding: 8 20;
+}
+
+.dialog-pane .button-bar .button:hover {
+    -fx-background-color: linear-gradient(to right, #5c6bc0, #7986cb);
+} 

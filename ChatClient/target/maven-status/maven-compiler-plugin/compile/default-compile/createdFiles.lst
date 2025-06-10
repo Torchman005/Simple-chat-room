@@ -1,12 +1,5 @@
-com\jinyu\chatcilent\service\Group.class
-com\jinyu\utils\Utility.class
-com\jinyu\chatcilent\service\FileClientService.class
-com\jinyu\chatcommon\MessageType.class
 com\jinyu\chatcommon\User.class
+com\jinyu\utils\Utility.class
+com\jinyu\chatcommon\MessageType.class
 com\jinyu\chatcommon\Message.class
-com\jinyu\chatcilent\service\ClientConnectServerThread.class
-com\jinyu\cfg\GetPath.class
-com\jinyu\chatcilent\service\ToUserFunction.class
-com\jinyu\chatcilent\service\ClientMessageService.class
 com\jinyu\main\ChatMain.class
-com\jinyu\chatcilent\service\ClientConnServerThreadsManage.class

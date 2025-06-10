@@ -1,16 +1,14 @@
 package com.jinyu.chatserver.service;
 
-import com.jinyu.chatcommon.Message;
-import com.jinyu.chatcommon.MessageType;
-
-import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Queue;
+
+import com.jinyu.chatcommon.Message;
+import com.jinyu.chatcommon.MessageType;
 
 public class ServerConnectClientThread extends Thread{
     private Socket socket;
@@ -25,8 +23,8 @@ public class ServerConnectClientThread extends Thread{
     @Override
     public void run(){
         while(true){
-            System.out.println(userId + "已连接并保持通信");
             try {
+                System.out.println(userId + "已连接并保持通信");
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 Message mes = (Message) ois.readObject();
 //                获取在线用户列表并且发给客户端
@@ -43,10 +41,10 @@ public class ServerConnectClientThread extends Thread{
                 }else if(mes.getMesType().equals(MessageType.MESSAGE_CLIENT_EXIT)){
 //                    调用方法
                     ClientThreadsManage.removeSCCThread(mes.getSender());
-                    //socket.close();//这里的socket是对应这个线程的socket，一定要记住关闭socket
                     System.out.println(userId + "退出登录");
                     OnlineUsers.deleteUser(userId);
-                    break;//一定要记住break！
+                    socket.close(); // 关闭socket连接
+                    break;
                 }else if(mes.getMesType().equals(MessageType.MESSAGE_COMM_MES)){
 //                    私聊转发
                     ObjectOutputStream oos = null;
@@ -56,8 +54,6 @@ public class ServerConnectClientThread extends Thread{
                     } catch (Exception e) {
                         System.out.println( mes.getGetter() + "不在线，无法私聊");
                     }
-
-
                 } else if(mes.getMesType().equals(MessageType.MESSAGE_FILE_MES)){
 //                    文件转发
                     ServerConnectClientThread thread = ClientThreadsManage.getServerConnectClientThread(mes.getGetter());
@@ -91,7 +87,18 @@ public class ServerConnectClientThread extends Thread{
                 } else{
                     System.out.println("其他类型的信息，暂时不作处理");
                 }
-            } catch (Exception e) {
+            } catch (IOException e) {
+                // 处理客户端异常断开连接的情况
+                System.out.println(userId + "退出登录");
+                ClientThreadsManage.removeSCCThread(userId);
+                OnlineUsers.deleteUser(userId);
+                try {
+                    socket.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                break;
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }

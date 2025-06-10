@@ -22,6 +22,15 @@ public class Message implements Serializable {
     private Queue<String> onlineUsers;
     private boolean isUser;
     private boolean isGroup;
+    private String groupName;
+
+    public Message() {}
+
+    public Message(String mesType, String content) {
+        this.mesType = mesType;
+        this.content = content;
+        this.sendTime = new java.util.Date().toString();
+    }
 
     public boolean isUser() {
         return isUser;
@@ -62,8 +71,6 @@ public class Message implements Serializable {
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
-
-    private String groupName;
 
     public byte[] getFileBytes() {
         return fileBytes;

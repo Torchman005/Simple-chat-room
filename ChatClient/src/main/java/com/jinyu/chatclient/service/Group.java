@@ -1,11 +1,12 @@
-package com.jinyu.chatcilent.service;
+package com.jinyu.chatclient.service;
+
+import java.io.ObjectOutputStream;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;
 import com.jinyu.utils.Utility;
-
-import java.io.ObjectOutputStream;
-import java.util.*;
 
 public class Group {
     public void pullGroup(String senderId){

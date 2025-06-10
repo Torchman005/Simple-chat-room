@@ -1,10 +1,8 @@
-package com.jinyu.chatcilent.service;
+package com.jinyu.chatclient.service;
 
 import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;
 
-import javax.management.ObjectName;
-import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Date;
 

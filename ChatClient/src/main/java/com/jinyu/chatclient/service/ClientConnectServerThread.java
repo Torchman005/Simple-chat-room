@@ -1,7 +1,8 @@
-package com.jinyu.chatcilent.service;
+package com.jinyu.chatclient.service;
 
 import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;
+import com.jinyu.ui.ChatUI;
 import com.jinyu.utils.Utility;
 
 import javax.management.ObjectName;
@@ -15,8 +16,11 @@ import java.util.Queue;
 public class ClientConnectServerThread extends Thread{
 //    全局变量事先声明
     private Socket socket;
-    public ClientConnectServerThread(Socket socket){
+    private ChatUI chatUI;
+
+    public ClientConnectServerThread(Socket socket, ChatUI chatUI){
         this.socket = socket;
+        this.chatUI = chatUI;
     }
     @Override
     public void run() {
@@ -32,36 +36,29 @@ public class ClientConnectServerThread extends Thread{
                 if (mes.getMesType().equals(MessageType.MESSAGE_RET_ONLINE_USERS_LIST)) {
 //                服务端的信息是返回在线用户列表，所以这里等待接收
                     Queue<String> onlineUsers = mes.getOnlineUsers();
-                    System.out.println("=========在线用户列表=========");
-                    for (int i = 0; i < onlineUsers.toArray().length; i++) {
-                        System.out.println("用户：" + onlineUsers.toArray()[i]);
-                    }
+                    chatUI.updateOnlineUsers(onlineUsers);
                 } else if (mes.getMesType().equals(MessageType.MESSAGE_COMM_MES)) {
 //                普通的聊天消息
-                    System.out.println("\n" + mes.getSendTime() + "  " + mes.getSender() + ": " + mes.getContent());
+                    chatUI.displayMessage(mes);
                 } else if(mes.getMesType().equals(MessageType.MESSAGE_FILE_MES)){
-                    System.out.println("来自" + mes.getSender() + "的文件，请输入要保存的路径：" );
-                    mes.setDest(Utility.readString(50));
-                    System.out.println("正在保存...");
-                    FileOutputStream fos = new FileOutputStream(mes.getDest());
-                    fos.write(mes.getFileBytes());
-                    fos.close();
-                    System.out.println("保存成功！");
+                    chatUI.displayMessage(mes);
+                    // 文件保存逻辑将在UI中处理
                 } else if(mes.getMesType().equals(MessageType.MESSAGE_SEND_TO_ALL)){
 //                    服务端推送消息
-                    System.out.println("\n" + mes.getSendTime() + "  " + mes.getSender() + ": " + mes.getContent());
+                    chatUI.displayMessage(mes);
                 } else if(mes.getMesType().equals(MessageType.MESSAGE_TO_GROUP_MES)){
                     if(mes.isGroup()){
-                        System.out.println("\n" + mes.getGroupName() + "  " + mes.getSendTime() + "  " + mes.getSender() + ": " + mes.getContent());
+                        chatUI.displayMessage(mes);
                     } else{
-                        System.out.println("无此群聊＞﹏＜");
+                        chatUI.displayMessage(new Message(MessageType.MESSAGE_SYSTEM, "无此群聊＞﹏＜"));
                     }
                 } else {
-                    System.out.println("其他类型的信息，暂时不做处理");
+                    chatUI.displayMessage(new Message(MessageType.MESSAGE_SYSTEM, "其他类型的信息，暂时不做处理"));
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
+                chatUI.displayMessage(new Message(MessageType.MESSAGE_SYSTEM, "接收消息错误: " + e.getMessage()));
+                break;
             }
         }
     }
