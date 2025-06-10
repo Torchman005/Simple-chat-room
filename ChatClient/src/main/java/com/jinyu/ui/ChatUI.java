@@ -2,6 +2,7 @@ package com.jinyu.ui;
 
 import java.util.Queue;
 
+import com.jinyu.chatclient.service.ToUserFunction;
 import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.User;
 
@@ -9,6 +10,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -35,9 +38,11 @@ public class ChatUI extends Application {
     private ObservableList<String> onlineUsers = FXCollections.observableArrayList();
     private Label currentChatTarget;
     private String currentChatUserId;
+    private ToUserFunction toUserFunction;
 
     public void setUser(User user) {
         this.user = user;
+        this.toUserFunction = new ToUserFunction();
         if (primaryStage != null) {
             primaryStage.setTitle("聊天系统 - " + user.getUserId());
         }
@@ -137,7 +142,25 @@ public class ChatUI extends Application {
         Button logoutButton = createStyledButton("退出", () -> {});
 
         toolbar.getChildren().addAll(refreshButton, privateChatButton, groupChatButton, createGroupButton, fileButton, logoutButton);
+        
+        refreshButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("刷新用户列表");
+                toUserFunction.reqOnlineUserList();
+            }
+        });
+
+        privateChatButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("私聊");
+            }
+        });
+        
         return toolbar;
+
+        
     }
 
     private HBox createInputArea() {

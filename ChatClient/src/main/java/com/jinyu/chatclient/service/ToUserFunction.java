@@ -135,7 +135,7 @@ public class ToUserFunction {
             user.setPwd(pwd);
             user.setUserType(UserType.USER_REGISTER);
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-            oos.writeObject(user);
+            oos.writeObject(user); 
 
             // 接收服务端回复的注册信息
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());

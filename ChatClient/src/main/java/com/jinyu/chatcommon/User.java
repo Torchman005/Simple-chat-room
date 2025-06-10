@@ -14,7 +14,7 @@ public class User implements Serializable {
     }
 
     public void setUserType(String userType) {
-        userType = userType;
+        this.userType = userType;
     }
 
     public User(String userId, String pwd) {

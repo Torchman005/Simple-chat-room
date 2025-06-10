@@ -178,9 +178,6 @@ public class LoginUI extends Application {
                 return;
             }
 
-            user = new User();
-            user.setUserId(userId);
-            user.setPwd(pwd);
 
             Task<Boolean> loginTask = new Task<>() {
                 @Override
