@@ -39,7 +39,7 @@ public class LoginUI extends Application {
         VBox mainLayout = new VBox(20);
         mainLayout.setAlignment(Pos.CENTER);
         mainLayout.setPadding(new Insets(40));
-        mainLayout.setStyle("-fx-background-color: linear-gradient(to bottom, #1a237e, #283593); " +
+        mainLayout.setStyle("-fx-background-color: linear-gradient(to bottom, #2196f3, #1976d2); " +
                           "-fx-font-family: 'Microsoft YaHei', 'SimHei', 'PingFang SC', sans-serif;");
 
         // 创建标题
@@ -67,8 +67,8 @@ public class LoginUI extends Application {
         HBox buttonBox = new HBox(20);
         buttonBox.setAlignment(Pos.CENTER);
         
-        loginButton = createStyledButton("登录", "#3949ab");
-        registerButton = createStyledButton("注册", "#5c6bc0");
+        loginButton = createStyledButton("登录", "#2196f3");
+        registerButton = createStyledButton("注册", "#1976d2");
         
         buttonBox.getChildren().addAll(loginButton, registerButton);
 
