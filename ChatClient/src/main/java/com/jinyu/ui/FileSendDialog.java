@@ -44,7 +44,7 @@ public class FileSendDialog {
         mainLayout.setAlignment(Pos.CENTER);
         mainLayout.setPadding(new Insets(30));
         mainLayout.setStyle("-fx-background-color: linear-gradient(to bottom, #1a237e, #283593); " +
-                          "-fx-font-family: 'Microsoft YaHei', 'SimHei', 'PingFang SC', sans-serif;");
+                "-fx-font-family: 'Microsoft YaHei', 'SimHei', 'PingFang SC', sans-serif;");
 
         // 创建标题
         Label titleLabel = new Label("发送文件");
@@ -56,55 +56,55 @@ public class FileSendDialog {
         VBox contentBox = new VBox(15);
         contentBox.setAlignment(Pos.CENTER);
         contentBox.setStyle("-fx-background-color: rgba(255, 255, 255, 0.1); " +
-                          "-fx-background-radius: 10; " +
-                          "-fx-border-radius: 10; " +
-                          "-fx-border-color: rgba(255, 255, 255, 0.2); " +
-                          "-fx-border-width: 1; " +
-                          "-fx-padding: 20;");
+                "-fx-background-radius: 10; " +
+                "-fx-border-radius: 10; " +
+                "-fx-border-color: rgba(255, 255, 255, 0.2); " +
+                "-fx-border-width: 1; " +
+                "-fx-padding: 20;");
 
         // 用户ID输入区域
         VBox userIdBox = new VBox(5);
         userIdBox.setAlignment(Pos.CENTER);
-        
+
         Label userIdLabel = new Label("接收者ID：");
         userIdLabel.setFont(Font.font("Microsoft YaHei", 14));
         userIdLabel.setTextFill(Color.WHITE);
-        
+
         userIdField = new TextField();
         userIdField.setPromptText("请输入接收者用户ID");
         userIdField.setFont(Font.font("Microsoft YaHei", 14));
         userIdField.setStyle("-fx-background-color: rgba(255, 255, 255, 0.1); " +
-                           "-fx-text-fill: white; " +
-                           "-fx-prompt-text-fill: rgba(255, 255, 255, 0.7); " +
-                           "-fx-background-radius: 5; " +
-                           "-fx-border-radius: 5; " +
-                           "-fx-border-color: rgba(255, 255, 255, 0.2); " +
-                           "-fx-border-width: 1; " +
-                           "-fx-padding: 8;");
-        
+                "-fx-text-fill: white; " +
+                "-fx-prompt-text-fill: rgba(255, 255, 255, 0.7); " +
+                "-fx-background-radius: 5; " +
+                "-fx-border-radius: 5; " +
+                "-fx-border-color: rgba(255, 255, 255, 0.2); " +
+                "-fx-border-width: 1; " +
+                "-fx-padding: 8;");
+
         userIdBox.getChildren().addAll(userIdLabel, userIdField);
 
         // 文件选择区域
         VBox fileBox = new VBox(10);
         fileBox.setAlignment(Pos.CENTER);
-        
+
         Label fileLabel = new Label("选择文件：");
         fileLabel.setFont(Font.font("Microsoft YaHei", 14));
         fileLabel.setTextFill(Color.WHITE);
-        
+
         filePathLabel = new Label("未选择文件");
         filePathLabel.setFont(Font.font("Microsoft YaHei", 14));
         filePathLabel.setTextFill(Color.WHITE);
         filePathLabel.setStyle("-fx-background-color: rgba(255, 255, 255, 0.1); " +
-                             "-fx-background-radius: 5; " +
-                             "-fx-border-radius: 5; " +
-                             "-fx-border-color: rgba(255, 255, 255, 0.2); " +
-                             "-fx-border-width: 1; " +
-                             "-fx-padding: 8; " +
-                             "-fx-min-width: 200;");
-        
+                "-fx-background-radius: 5; " +
+                "-fx-border-radius: 5; " +
+                "-fx-border-color: rgba(255, 255, 255, 0.2); " +
+                "-fx-border-width: 1; " +
+                "-fx-padding: 8; " +
+                "-fx-min-width: 200;");
+
         selectFileButton = createStyledButton("浏览文件", "#3949ab");
-        
+
         fileBox.getChildren().addAll(fileLabel, filePathLabel, selectFileButton);
 
         // 底部按钮
@@ -154,10 +154,15 @@ public class FileSendDialog {
                 showAlert("请选择要发送的文件");
                 return;
             }
-            
-            // TODO: 调用发送文件的方法
-            // chatUI.sendFile(userId, selectedFile);
-            
+            try {
+                new com.jinyu.chatclient.service.FileClientService().sendFileToOne(selectedFile.getAbsolutePath(),
+                        chatUI.getUser().getUserId(), userId);
+                chatUI.displayMessage(new com.jinyu.chatcommon.Message(com.jinyu.chatcommon.MessageType.MESSAGE_SYSTEM,
+                        "文件已发送: " + selectedFile.getName()));
+            } catch (Exception ex) {
+                chatUI.displayMessage(new com.jinyu.chatcommon.Message(com.jinyu.chatcommon.MessageType.MESSAGE_SYSTEM,
+                        "发送文件失败: " + ex.getMessage()));
+            }
             dialogStage.close();
         });
 
@@ -177,25 +182,25 @@ public class FileSendDialog {
         Button button = new Button(text);
         button.setFont(Font.font("Microsoft YaHei", FontWeight.BOLD, 14));
         button.setStyle("-fx-background-color: " + color + "; " +
-                       "-fx-text-fill: white; " +
-                       "-fx-background-radius: 5; " +
-                       "-fx-border-radius: 5; " +
-                       "-fx-padding: 8 20; " +
-                       "-fx-cursor: hand;");
-        
+                "-fx-text-fill: white; " +
+                "-fx-background-radius: 5; " +
+                "-fx-border-radius: 5; " +
+                "-fx-padding: 8 20; " +
+                "-fx-cursor: hand;");
+
         // 添加悬停效果
         button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: " + color + "dd; " +
-                                                    "-fx-text-fill: white; " +
-                                                    "-fx-background-radius: 5; " +
-                                                    "-fx-border-radius: 5; " +
-                                                    "-fx-padding: 8 20; " +
-                                                    "-fx-cursor: hand;"));
+                "-fx-text-fill: white; " +
+                "-fx-background-radius: 5; " +
+                "-fx-border-radius: 5; " +
+                "-fx-padding: 8 20; " +
+                "-fx-cursor: hand;"));
         button.setOnMouseExited(e -> button.setStyle("-fx-background-color: " + color + "; " +
-                                                   "-fx-text-fill: white; " +
-                                                   "-fx-background-radius: 5; " +
-                                                   "-fx-border-radius: 5; " +
-                                                   "-fx-padding: 8 20; " +
-                                                   "-fx-cursor: hand;"));
+                "-fx-text-fill: white; " +
+                "-fx-background-radius: 5; " +
+                "-fx-border-radius: 5; " +
+                "-fx-padding: 8 20; " +
+                "-fx-cursor: hand;"));
         return button;
     }
-} 
+}

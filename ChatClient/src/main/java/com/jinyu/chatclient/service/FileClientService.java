@@ -19,26 +19,27 @@ public class FileClientService {
         mes.setSender(senderId);
         mes.setGetter(getterId);
 
-//        读取文件
+        // 读取文件
         FileInputStream fis = null;
-        byte[] fileBytes = new byte[(int)new File(src).length()];
+        byte[] fileBytes = new byte[(int) new File(src).length()];
 
         try {
             fis = new FileInputStream(src);
             fis.read(fileBytes);
-//            将文件对应的字节数组设置到message
+            // 将文件对应的字节数组设置到message
             mes.setFileBytes(fileBytes);
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if(fis != null){
+        } finally {
+            if (fis != null) {
                 fis.close();
             }
         }
         System.out.println("文件发送中...");
 
-//        发送
-        ObjectOutputStream oos = new ObjectOutputStream(ClientConnServerThreadsManage.getClientConnectServerThread(senderId).getSocket().getOutputStream());
+        // 发送
+        ObjectOutputStream oos = new ObjectOutputStream(
+                ClientConnServerThreadsManage.getClientConnectServerThread(senderId).getSocket().getOutputStream());
         oos.writeObject(mes);
     }
 }

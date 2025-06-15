@@ -34,13 +34,13 @@ public class LoginUI extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.toUserFunction = new ToUserFunction();
-        
+
         // 创建主布局
         VBox mainLayout = new VBox(20);
         mainLayout.setAlignment(Pos.CENTER);
         mainLayout.setPadding(new Insets(40));
         mainLayout.setStyle("-fx-background-color: linear-gradient(to bottom, #2196f3, #1976d2); " +
-                          "-fx-font-family: 'Microsoft YaHei', 'SimHei', 'PingFang SC', sans-serif;");
+                "-fx-font-family: 'Microsoft YaHei', 'SimHei', 'PingFang SC', sans-serif;");
 
         // 创建标题
         Label titleLabel = new Label("Simple-Chat-Room  Login");
@@ -53,11 +53,11 @@ public class LoginUI extends Application {
         formBox.setAlignment(Pos.CENTER);
         formBox.setMaxWidth(400);
         formBox.setStyle("-fx-background-color: rgba(255, 255, 255, 0.1); " +
-                        "-fx-background-radius: 15; " +
-                        "-fx-border-radius: 15; " +
-                        "-fx-border-color: rgba(255, 255, 255, 0.2); " +
-                        "-fx-border-width: 1; " +
-                        "-fx-padding: 30;");
+                "-fx-background-radius: 15; " +
+                "-fx-border-radius: 15; " +
+                "-fx-border-color: rgba(255, 255, 255, 0.2); " +
+                "-fx-border-width: 1; " +
+                "-fx-padding: 30;");
 
         // 创建输入字段
         userIdField = createStyledTextField("用户ID");
@@ -66,10 +66,10 @@ public class LoginUI extends Application {
         // 创建按钮
         HBox buttonBox = new HBox(20);
         buttonBox.setAlignment(Pos.CENTER);
-        
+
         loginButton = createStyledButton("登录", "#2196f3");
         registerButton = createStyledButton("注册", "#1976d2");
-        
+
         buttonBox.getChildren().addAll(loginButton, registerButton);
 
         // 创建状态标签
@@ -80,11 +80,10 @@ public class LoginUI extends Application {
 
         // 添加组件到表单
         formBox.getChildren().addAll(
-            createInputGroup("用户ID", userIdField),
-            createInputGroup("密码", pwdField),
-            buttonBox,
-            statusLabel
-        );
+                createInputGroup("用户ID", userIdField),
+                createInputGroup("密码", pwdField),
+                buttonBox,
+                statusLabel);
 
         // 添加组件到主布局
         mainLayout.getChildren().addAll(titleLabel, formBox);
@@ -108,13 +107,13 @@ public class LoginUI extends Application {
         field.setPromptText(prompt);
         field.setFont(Font.font("Microsoft YaHei", 14));
         field.setStyle("-fx-background-color: rgba(255, 255, 255, 0.1); " +
-                      "-fx-text-fill: white; " +
-                      "-fx-prompt-text-fill: rgba(255, 255, 255, 0.7); " +
-                      "-fx-background-radius: 5; " +
-                      "-fx-border-radius: 5; " +
-                      "-fx-border-color: rgba(255, 255, 255, 0.2); " +
-                      "-fx-border-width: 1; " +
-                      "-fx-padding: 10;");
+                "-fx-text-fill: white; " +
+                "-fx-prompt-text-fill: rgba(255, 255, 255, 0.7); " +
+                "-fx-background-radius: 5; " +
+                "-fx-border-radius: 5; " +
+                "-fx-border-color: rgba(255, 255, 255, 0.2); " +
+                "-fx-border-width: 1; " +
+                "-fx-padding: 10;");
         return field;
     }
 
@@ -123,13 +122,13 @@ public class LoginUI extends Application {
         field.setPromptText(prompt);
         field.setFont(Font.font("Microsoft YaHei", 14));
         field.setStyle("-fx-background-color: rgba(255, 255, 255, 0.1); " +
-                      "-fx-text-fill: white; " +
-                      "-fx-prompt-text-fill: rgba(255, 255, 255, 0.7); " +
-                      "-fx-background-radius: 5; " +
-                      "-fx-border-radius: 5; " +
-                      "-fx-border-color: rgba(255, 255, 255, 0.2); " +
-                      "-fx-border-width: 1; " +
-                      "-fx-padding: 10;");
+                "-fx-text-fill: white; " +
+                "-fx-prompt-text-fill: rgba(255, 255, 255, 0.7); " +
+                "-fx-background-radius: 5; " +
+                "-fx-border-radius: 5; " +
+                "-fx-border-color: rgba(255, 255, 255, 0.2); " +
+                "-fx-border-width: 1; " +
+                "-fx-padding: 10;");
         return field;
     }
 
@@ -137,25 +136,25 @@ public class LoginUI extends Application {
         Button button = new Button(text);
         button.setFont(Font.font("Microsoft YaHei", FontWeight.BOLD, 14));
         button.setStyle("-fx-background-color: " + color + "; " +
-                       "-fx-text-fill: white; " +
-                       "-fx-background-radius: 5; " +
-                       "-fx-border-radius: 5; " +
-                       "-fx-padding: 10 30; " +
-                       "-fx-cursor: hand;");
-        
+                "-fx-text-fill: white; " +
+                "-fx-background-radius: 5; " +
+                "-fx-border-radius: 5; " +
+                "-fx-padding: 10 30; " +
+                "-fx-cursor: hand;");
+
         // 添加悬停效果
         button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: " + color + "dd; " +
-                                                    "-fx-text-fill: white; " +
-                                                    "-fx-background-radius: 5; " +
-                                                    "-fx-border-radius: 5; " +
-                                                    "-fx-padding: 10 30; " +
-                                                    "-fx-cursor: hand;"));
+                "-fx-text-fill: white; " +
+                "-fx-background-radius: 5; " +
+                "-fx-border-radius: 5; " +
+                "-fx-padding: 10 30; " +
+                "-fx-cursor: hand;"));
         button.setOnMouseExited(e -> button.setStyle("-fx-background-color: " + color + "; " +
-                                                   "-fx-text-fill: white; " +
-                                                   "-fx-background-radius: 5; " +
-                                                   "-fx-border-radius: 5; " +
-                                                   "-fx-padding: 10 30; " +
-                                                   "-fx-cursor: hand;"));
+                "-fx-text-fill: white; " +
+                "-fx-background-radius: 5; " +
+                "-fx-border-radius: 5; " +
+                "-fx-padding: 10 30; " +
+                "-fx-cursor: hand;"));
         return button;
     }
 
@@ -172,13 +171,20 @@ public class LoginUI extends Application {
         loginButton.setOnAction(e -> {
             String userId = userIdField.getText();
             String pwd = pwdField.getText();
-            
+
             if (userId.isEmpty() || pwd.isEmpty()) {
                 statusLabel.setText("请输入用户ID和密码");
                 return;
             }
 
+            // 先 new ChatUI
+            ChatUI chatUI = new ChatUI();
+            chatUI.setToUserFunction(toUserFunction);
 
+            // 先 set 到 ToUserFunction
+            toUserFunction.setChatUI(chatUI);
+
+            // 登录任务
             Task<Boolean> loginTask = new Task<>() {
                 @Override
                 protected Boolean call() throws Exception {
@@ -190,12 +196,14 @@ public class LoginUI extends Application {
                 boolean success = loginTask.getValue();
                 if (success) {
                     statusLabel.setText("登录成功");
-                    // 启动聊天界面
                     Platform.runLater(() -> {
-                        ChatUI chatUI = new ChatUI();
-                        chatUI.setUser(user);
+                        // 获取登录成功的user对象
+                        User loginUser = toUserFunction.getUser();
+                        chatUI.setUser(loginUser);
+
                         try {
                             chatUI.start(new Stage());
+                            chatUI.reqOnlineUserList();
                             primaryStage.close();
                         } catch (Exception ex) {
                             ex.printStackTrace();
@@ -227,4 +235,4 @@ public class LoginUI extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-} 
+}

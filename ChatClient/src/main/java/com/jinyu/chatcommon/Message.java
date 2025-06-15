@@ -5,30 +5,36 @@ import java.util.PrimitiveIterator;
 import java.util.Queue;
 
 public class Message implements Serializable {
-//    指定序列化版本号
+    // 指定序列化版本号
     private static final long serialVersionUID = 1L;
     private String sender;
     private String getter;
-    private String content;//发送内容
+    private String content;// 发送内容
     private String sendTime;
-    private String mesType;//消息类型（接口定义）
+    private String mesType;// 消息类型（接口定义）
 
-//    和文件相关的字段
+    // 和文件相关的字段
     private byte[] fileBytes;
     private int fileLen = 0;
-    private String dest;//文件传输到哪里
-    private String src;//文件源路径
+    private String dest;// 文件传输到哪里
+    private String src;// 文件源路径
     private Queue<String> groupMembers;
     private Queue<String> onlineUsers;
     private boolean isUser;
     private boolean isGroup;
     private String groupName;
 
-    public Message() {}
+    public Message() {
+    }
 
     public Message(String mesType, String content) {
         this.mesType = mesType;
         this.content = content;
+        this.sendTime = new java.util.Date().toString();
+    }
+
+    public Message(String mesType) {
+        this.mesType = mesType;
         this.sendTime = new java.util.Date().toString();
     }
 

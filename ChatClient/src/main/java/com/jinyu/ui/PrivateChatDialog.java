@@ -35,7 +35,7 @@ public class PrivateChatDialog {
         mainLayout.setAlignment(Pos.CENTER);
         mainLayout.setPadding(new Insets(30));
         mainLayout.setStyle("-fx-background-color: linear-gradient(to bottom, #1a237e, #283593); " +
-                          "-fx-font-family: 'Microsoft YaHei', 'SimHei', 'PingFang SC', sans-serif;");
+                "-fx-font-family: 'Microsoft YaHei', 'SimHei', 'PingFang SC', sans-serif;");
 
         // 创建标题
         Label titleLabel = new Label("选择私聊对象");
@@ -47,11 +47,11 @@ public class PrivateChatDialog {
         VBox inputBox = new VBox(10);
         inputBox.setAlignment(Pos.CENTER);
         inputBox.setStyle("-fx-background-color: rgba(255, 255, 255, 0.1); " +
-                        "-fx-background-radius: 10; " +
-                        "-fx-border-radius: 10; " +
-                        "-fx-border-color: rgba(255, 255, 255, 0.2); " +
-                        "-fx-border-width: 1; " +
-                        "-fx-padding: 20;");
+                "-fx-background-radius: 10; " +
+                "-fx-border-radius: 10; " +
+                "-fx-border-color: rgba(255, 255, 255, 0.2); " +
+                "-fx-border-width: 1; " +
+                "-fx-padding: 20;");
 
         Label promptLabel = new Label("请输入对方用户ID：");
         promptLabel.setFont(Font.font("Microsoft YaHei", 14));
@@ -61,13 +61,13 @@ public class PrivateChatDialog {
         userIdField.setPromptText("用户ID");
         userIdField.setFont(Font.font("Microsoft YaHei", 14));
         userIdField.setStyle("-fx-background-color: rgba(255, 255, 255, 0.1); " +
-                           "-fx-text-fill: white; " +
-                           "-fx-prompt-text-fill: rgba(255, 255, 255, 0.7); " +
-                           "-fx-background-radius: 5; " +
-                           "-fx-border-radius: 5; " +
-                           "-fx-border-color: rgba(255, 255, 255, 0.2); " +
-                           "-fx-border-width: 1; " +
-                           "-fx-padding: 8;");
+                "-fx-text-fill: white; " +
+                "-fx-prompt-text-fill: rgba(255, 255, 255, 0.7); " +
+                "-fx-background-radius: 5; " +
+                "-fx-border-radius: 5; " +
+                "-fx-border-color: rgba(255, 255, 255, 0.2); " +
+                "-fx-border-width: 1; " +
+                "-fx-padding: 8;");
 
         // 创建按钮区域
         HBox buttonBox = new HBox(20);
@@ -108,25 +108,25 @@ public class PrivateChatDialog {
         Button button = new Button(text);
         button.setFont(Font.font("Microsoft YaHei", FontWeight.BOLD, 14));
         button.setStyle("-fx-background-color: " + color + "; " +
-                       "-fx-text-fill: white; " +
-                       "-fx-background-radius: 5; " +
-                       "-fx-border-radius: 5; " +
-                       "-fx-padding: 8 20; " +
-                       "-fx-cursor: hand;");
-        
+                "-fx-text-fill: white; " +
+                "-fx-background-radius: 5; " +
+                "-fx-border-radius: 5; " +
+                "-fx-padding: 8 20; " +
+                "-fx-cursor: hand;");
+
         // 添加悬停效果
         button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: " + color + "dd; " +
-                                                    "-fx-text-fill: white; " +
-                                                    "-fx-background-radius: 5; " +
-                                                    "-fx-border-radius: 5; " +
-                                                    "-fx-padding: 8 20; " +
-                                                    "-fx-cursor: hand;"));
+                "-fx-text-fill: white; " +
+                "-fx-background-radius: 5; " +
+                "-fx-border-radius: 5; " +
+                "-fx-padding: 8 20; " +
+                "-fx-cursor: hand;"));
         button.setOnMouseExited(e -> button.setStyle("-fx-background-color: " + color + "; " +
-                                                   "-fx-text-fill: white; " +
-                                                   "-fx-background-radius: 5; " +
-                                                   "-fx-border-radius: 5; " +
-                                                   "-fx-padding: 8 20; " +
-                                                   "-fx-cursor: hand;"));
+                "-fx-text-fill: white; " +
+                "-fx-background-radius: 5; " +
+                "-fx-border-radius: 5; " +
+                "-fx-padding: 8 20; " +
+                "-fx-cursor: hand;"));
         return button;
     }
-} 
+}

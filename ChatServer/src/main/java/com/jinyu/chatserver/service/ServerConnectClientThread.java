@@ -10,27 +10,31 @@ import java.util.Queue;
 import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;
 
-public class ServerConnectClientThread extends Thread{
+public class ServerConnectClientThread extends Thread {
     private Socket socket;
     private String userId;
-    public ServerConnectClientThread(Socket socket, String userId){
+
+    public ServerConnectClientThread(Socket socket, String userId) {
         this.socket = socket;
         this.userId = userId;
     }
-    public Socket getSocket(){
+
+    public Socket getSocket() {
         return this.socket;
     }
+
     @Override
-    public void run(){
-        while(true){
+    public void run() {
+        while (true) {
             try {
                 System.out.println(userId + "已连接并保持通信");
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 Message mes = (Message) ois.readObject();
-//                获取在线用户列表并且发给客户端
-                if(mes.getMesType().equals(MessageType.MESSAGE_REQ_ONLINE_USERS)){
+                // 获取在线用户列表并且发给客户端
+                if (mes.getMesType().equals(MessageType.MESSAGE_REQ_ONLINE_USERS)) {
                     System.out.println(mes.getSender() + "请求获取在线用户列表");
                     Queue<String> onlineUsers = ClientThreadsManage.getOnlineUsers();
+                    System.out.println("服务端返回在线用户列表：" + onlineUsers);
                     Message mes2 = new Message();
                     mes2.setMesType(MessageType.MESSAGE_RET_ONLINE_USERS_LIST);
                     mes2.setOnlineUsers(onlineUsers);
@@ -38,53 +42,67 @@ public class ServerConnectClientThread extends Thread{
 
                     ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
                     oos.writeObject(mes2);
-                }else if(mes.getMesType().equals(MessageType.MESSAGE_CLIENT_EXIT)){
-//                    调用方法
+                } else if (mes.getMesType().equals(MessageType.MESSAGE_CLIENT_EXIT)) {
+                    // 调用方法
                     ClientThreadsManage.removeSCCThread(mes.getSender());
                     System.out.println(userId + "退出登录");
                     OnlineUsers.deleteUser(userId);
                     socket.close(); // 关闭socket连接
                     break;
-                }else if(mes.getMesType().equals(MessageType.MESSAGE_COMM_MES)){
-//                    私聊转发
+                } else if (mes.getMesType().equals(MessageType.MESSAGE_COMM_MES)) {
+                    // 私聊转发
                     ObjectOutputStream oos = null;
                     try {
-                        oos = new ObjectOutputStream(ClientThreadsManage.getServerConnectClientThread(mes.getGetter()).getSocket().getOutputStream());
-                        oos.writeObject(mes);//若要离线留言，可发送给数据库
+                        oos = new ObjectOutputStream(ClientThreadsManage.getServerConnectClientThread(mes.getGetter())
+                                .getSocket().getOutputStream());
+                        oos.writeObject(mes);// 若要离线留言，可发送给数据库
                     } catch (Exception e) {
-                        System.out.println( mes.getGetter() + "不在线，无法私聊");
+                        System.out.println(mes.getGetter() + "不在线，无法私聊");
                     }
-                } else if(mes.getMesType().equals(MessageType.MESSAGE_FILE_MES)){
-//                    文件转发
-                    ServerConnectClientThread thread = ClientThreadsManage.getServerConnectClientThread(mes.getGetter());
+                } else if (mes.getMesType().equals(MessageType.MESSAGE_FILE_MES)) {
+                    // 文件转发
+                    ServerConnectClientThread thread = ClientThreadsManage
+                            .getServerConnectClientThread(mes.getGetter());
                     ObjectOutputStream oos = new ObjectOutputStream(thread.getSocket().getOutputStream());
                     oos.writeObject(mes);
-                } else if(mes.getMesType().equals(MessageType.MESSAGE_PULL_GROUP_MES)) {
-//                    拉群，并将群存储
+                } else if (mes.getMesType().equals(MessageType.MESSAGE_PULL_GROUP_MES)) {
+                    // 拉群，并将群存储
                     Groups.addGroup(mes.getGroupName(), mes.getGroupMembers());
-                } else if(mes.getMesType().equals(MessageType.MESSAGE_TO_GROUP_MES)){
-//                    群发消息
-//                    判断是否有此群聊
-                    if(Groups.hasGroup(mes.getGroupName())){
+                    // 新建群聊后，主动推送群聊列表给所有群成员
+                    Queue<String> members = mes.getGroupMembers();
+                    if (members != null) {
+                        for (String member : members) {
+                            sendGroupListToUser(member);
+                        }
+                    }
+                } else if (mes.getMesType().equals(MessageType.MESSAGE_TO_GROUP_MES)) {
+                    // 群发消息
+                    // 判断是否有此群聊
+                    if (Groups.hasGroup(mes.getGroupName())) {
                         mes.setGroup(true);
                         Queue<String> group = Groups.getGroup(mes.getGroupName());
                         Iterator<String> iterator = group.iterator();
-                        while(iterator.hasNext()){
+                        while (iterator.hasNext()) {
                             String onlineUser = iterator.next();
-                            if(!onlineUser.equals(mes.getSender())){
-//                            排除发消息的用户
-                                ObjectOutputStream oos = new ObjectOutputStream(ClientThreadsManage.getServerConnectClientThread(onlineUser).getSocket().getOutputStream());
+                            if (!onlineUser.equals(mes.getSender())) {
+                                // 排除发消息的用户
+                                ObjectOutputStream oos = new ObjectOutputStream(ClientThreadsManage
+                                        .getServerConnectClientThread(onlineUser).getSocket().getOutputStream());
                                 oos.writeObject(mes);
                             }
                         }
-                    } else{
-//                        将不存在群组的信息发送给客户端
+                    } else {
+                        // 将不存在群组的信息发送给客户端
                         System.out.println("不存在此群聊");
                         mes.setGroup(false);
-                        ObjectOutputStream oos = new ObjectOutputStream(ClientThreadsManage.getServerConnectClientThread(mes.getSender()).getSocket().getOutputStream());
+                        ObjectOutputStream oos = new ObjectOutputStream(ClientThreadsManage
+                                .getServerConnectClientThread(mes.getSender()).getSocket().getOutputStream());
                         oos.writeObject(mes);
                     }
-                } else{
+                } else if (mes.getMesType().equals(com.jinyu.chatcommon.MessageType.MESSAGE_REQ_GROUP_LIST)) {
+                    // 客户端请求群聊列表
+                    sendGroupListToUser(mes.getSender());
+                } else {
                     System.out.println("其他类型的信息，暂时不作处理");
                 }
             } catch (IOException e) {
@@ -101,6 +119,23 @@ public class ServerConnectClientThread extends Thread{
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    // 新增：推送群聊列表给指定用户
+    private void sendGroupListToUser(String userId) {
+        try {
+            java.util.List<String> groupList = Groups.getGroupsForUser(userId);
+            Message groupListMsg = new Message();
+            groupListMsg.setMesType(com.jinyu.chatcommon.MessageType.MESSAGE_RET_GROUP_LIST);
+            groupListMsg.setGetter(userId);
+            // 用content存储群聊名列表，逗号分隔
+            groupListMsg.setContent(String.join(",", groupList));
+            ObjectOutputStream oos = new ObjectOutputStream(
+                    ClientThreadsManage.getServerConnectClientThread(userId).getSocket().getOutputStream());
+            oos.writeObject(groupListMsg);
+        } catch (Exception e) {
+            System.out.println("推送群聊列表给" + userId + "失败: " + e.getMessage());
         }
     }
 }

@@ -3,7 +3,7 @@ package com.jinyu.chatcommon;
 import java.io.Serializable;
 
 public class User implements Serializable {
-//    指定序列化版本号
+    // 指定序列化版本号
     private static final long serialVersionUID = 1L;
     private String userId;
     private String pwd;
